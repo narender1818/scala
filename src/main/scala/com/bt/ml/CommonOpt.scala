@@ -1,7 +1,6 @@
 package com.bt.ml
 
 import java.util.Properties
-
 import org.apache.spark.ml.classification.LogisticRegression
 import org.apache.spark.ml.param.ParamMap
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
@@ -19,7 +18,6 @@ class CommonOpt(master: String) {
     val appname = prop.getProperty("appname")
     val sc = new SparkContext(new SparkConf().setMaster(master).setAppName(appname)) // An existing SparkContext.
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
-
     // Prepare training data from a list of (label, features) tuples.
     val training = sqlContext.createDataFrame(Seq(
       (1.0, Vectors.dense(0.0, 1.1, 0.1)),

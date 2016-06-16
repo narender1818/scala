@@ -1,6 +1,9 @@
 package com.bt.main
 
 import java.util.Properties
+
+import org.apache.spark.{SparkConf, SparkContext}
+
 import scala.io.Source
 
 object Entry extends App {
@@ -15,8 +18,10 @@ object Entry extends App {
       test.wordCount(prop)
     }
     case "dataframe" => {
-      val test = new com.bt.dataframe.CommonOpt(master)
-      test.useDataFrame(prop)
+      val appname = prop.getProperty("appname")
+      val sc = new SparkContext(new SparkConf().setMaster(master).setAppName(appname)) // An existing SparkContext.
+      val test = new com.bt.dataframe.CommonOpt(sc)
+      test.forOperation(prop)
     }
     case "stream" => {
       val test = new com.bt.stream.CommonOpt(master)
@@ -29,5 +34,5 @@ object Entry extends App {
     }
   }
 
-  entryPoint("core")
+  entryPoint("dataframe")
 }
